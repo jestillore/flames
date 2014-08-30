@@ -1,5 +1,8 @@
 package com.jillberthestillore.flames;
 
+import com.jillberthestillore.flames.factories.FragmentFactory;
+import com.jillberthestillore.flames.fragments.FlamesFragment;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -11,13 +14,17 @@ import android.view.ViewGroup;
 
 public class MainActivity extends ActionBarActivity {
 
+	static {
+		FragmentFactory.register("flames", FlamesFragment.class);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+					.add(R.id.container, FragmentFactory.create("flames")).commit();
 		}
 	}
 
@@ -56,4 +63,5 @@ public class MainActivity extends ActionBarActivity {
 			return rootView;
 		}
 	}
+	
 }
